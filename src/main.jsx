@@ -1,18 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import AppRouter from './router/AppRouter';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline"; // Material UI Reset
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import AppRouter from "./router/AppRouter"; // Pastikan path ini sesuai dengan lokasi AppRouter Anda
 
-const queryClient = new QueryClient();
+// Buat tema Material UI jika diperlukan
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1976d2",
+    },
+    secondary: {
+      main: "#dc004e",
+    },
+  },
+});
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline /> {/* Reset CSS untuk Material UI */}
       <BrowserRouter>
         <AppRouter />
       </BrowserRouter>
-    </QueryClientProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );

@@ -1,21 +1,32 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from '../pages/Home';
-import About from '../pages/About';
-import Dashboard from '../pages/Dashboard';
-import LoginPage from '../pages/LoginPage';
-import ProfilePage from '../pages/ProfilePage';
-import Header from '../components/Header';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Dashboard from "../pages/Dashboard";
+import LoginPage from "../pages/LoginPage";
+import ProfilePage from "../pages/ProfilePage";
+import LandingPage from "../pages/LandingPage";
+import Header from "../components/Header";
+import Cookies from "js-cookie";
 
+const isAuthenticated = () => !!Cookies.get("token");
 
 const AppRouter = () => (
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/about" element={<About />} />
-    <Route path="/dashboard" element={<Dashboard />} />
-    <Route path="/login" element={<LoginPage />} />
-    <Route path="/profile" element={<ProfilePage />} />
-  </Routes>
+  <>
+    {/* Header hanya dirender sekali */}
+    <Header />
+
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route
+        path="/dashboard"
+        element={isAuthenticated() ? <Dashboard /> : <Navigate to="/login" />}
+      />
+      <Route
+        path="/profile"
+        element={isAuthenticated() ? <ProfilePage /> : <Navigate to="/login" />}
+      />
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
+  </>
 );
 
 export default AppRouter;
