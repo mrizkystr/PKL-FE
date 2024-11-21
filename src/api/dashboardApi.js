@@ -1,4 +1,3 @@
-// src/api/dashboardAPI.js
 import axios from './axios';
 
 export const fetchDashboardData = async () => {
